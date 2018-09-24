@@ -1,0 +1,9 @@
+ pipeline: "development"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: "develop"
+  actions:
+  - action: "Install python requirements"
+    type: "BUILD"
+    - "pytest"
+    setup_commands:
+     - "python install -r requirements.txt"
