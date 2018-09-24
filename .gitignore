@@ -1,0 +1,15 @@
+
+# Python files
+*.pyc
+
+# Project/IDE files.
+.idea
+.idea/**
+
+# Caches
+.cache
+.pytest_cache/**
+
+
+# Development database
+db.sqlite3
