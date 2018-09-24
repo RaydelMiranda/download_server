@@ -4,17 +4,17 @@ from __future__ import unicode_literals
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, DeleteView, UpdateView, ListView, \
-    DetailView
+from django.views.generic import (CreateView, DeleteView, UpdateView,
+                                  ListView, DetailView)
 
-from download.forms import NewDownloadTaskForm
 from download.models import DownloadTask
 
 
 class NewDownloadView(CreateView):
     model = DownloadTask
-    form_class = NewDownloadTaskForm
-    template_name_suffix = '_new'
+    template_name = 'download/new_download.html'
+    fields = ['url', 'owner', 'start_time', 'auto_pause',
+              'auto_pause_time', 'auto_resume_time']
 
 
 class CancelDownload(View):
