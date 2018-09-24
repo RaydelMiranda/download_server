@@ -6,6 +6,6 @@ from django.contrib.auth.models import UserManager
 @pytest.fixture(scope='session')
 def test_user():
     user = UserManager().create_user(
-        'test', 'test.pass.123', email='test@test.com'
+        'test', email='test@test.com', password='test.pass.123'
     )
     return user
