@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import timedelta
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -9,7 +11,8 @@ from django.utils.translation import ugettext as _
 
 
 class FileMetaData(models.Model):
-    size = models.DecimalField(_("Size of the file"), decimal_places=2)
+    size = models.DecimalField(_("Size of the file"), decimal_places=2,
+                               max_digits=10)
     type = models.CharField(_("File type"), max_length=255)
 
 
@@ -23,7 +26,11 @@ class DownloadTask(models.Model):
         settings.AUTH_USER_MODEL, null=True, on_delete=SET_NULL
     )
 
-    duration = models.DurationField(_("Duration"), max_length=255)
+    duration = models.DurationField(
+        _("Duration"), max_length=255,
+        default=timedelta(hours=0, minutes=0, seconds=0)
+    )
+
     progress = models.IntegerField(_("Progress"), default=0)
     start_time = models.DateTimeField(_("Init time"), blank=False, null=True)
 
@@ -82,7 +89,8 @@ class DownloadTask(models.Model):
         (TASK_SCOPE_PUBLIC, _("Public")),
     )
 
-    scope = models.IntegerField(_("Scope"), choices=TASK_SCOPE_CHOICES)
+    scope = models.IntegerField(_("Scope"), choices=TASK_SCOPE_CHOICES,
+                                default=TASK_SCOPE_PUBLIC)
 
     file_metadata = models.ForeignKey(FileMetaData, on_delete=SET_NULL,
                                       null=True)
