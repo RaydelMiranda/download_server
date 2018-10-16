@@ -39,14 +39,14 @@ class DownloadTask(models.Model):
         default=False
     )
 
-    auto_pause_time = models.DateTimeField(
+    auto_pause_time = models.TimeField(
         _("Pause download at this time"),
-        null=True, blank=False
+        null=True, blank=True
     )
 
-    auto_resume_time = models.DateTimeField(
+    auto_resume_time = models.TimeField(
         _("Resume download at this time"),
-        null=True, blank=False
+        null=True, blank=True
     )
 
     TASK_STATUS_STARTED = 0
@@ -94,3 +94,6 @@ class DownloadTask(models.Model):
 
     file_metadata = models.ForeignKey(FileMetaData, on_delete=SET_NULL,
                                       null=True)
+
+    def __str__(self):
+        return self.url

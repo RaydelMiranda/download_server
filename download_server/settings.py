@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 DOWNLOAD_SERVER_APPS = [
     'download',
     'download_server',
+    'server_site',
 ]
 
 INSTALLED_APPS += DOWNLOAD_SERVER_APPS
@@ -118,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # -----------------------------------------------------------------------------
 # Internationalization.
 # -----------------------------------------------------------------------------
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 

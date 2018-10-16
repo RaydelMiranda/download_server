@@ -1,8 +1,6 @@
 #! -*- coding: utf-8 -*-
-import datetime
 
 import pytest
-from dateutil.relativedelta import relativedelta
 from django.urls import reverse, NoReverseMatch
 
 # -----------------------------------------------------------------------------
@@ -28,16 +26,17 @@ class TestForViews(object):
     def test_download_creation(self, db, client, test_user):  # noqa
 
         # Create the download.
-        dummy_url = 'http://dummy_url.dummy'
+        dummy_url = 'http://dummy-url.dummy.com'
         data = {
             'url': dummy_url,
-            'owner': test_user,
-            'start_time': datetime.datetime.now(),
-            'auto_pause': True,
-            'auto_pause_time': datetime.datetime.now() + relativedelta(hours=2),
-            'auto_resume_time': datetime.datetime.now() + relativedelta(hours=4)
+            'owner': test_user.pk,
+            'priority': DownloadTask.TASK_PRIORITY_MEDIUM
         }
+
         client.post(reverse('new_download'), data)
 
         # Check for the download creation.
-        download = DownloadTask.objects.get(url=dummy_url)
+        try:
+            DownloadTask.objects.get(url=dummy_url)
+        except DownloadTask.DoesNotExist:
+            pytest.fail("Download not created")

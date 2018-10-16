@@ -7,14 +7,15 @@ from django.views import View
 from django.views.generic import (CreateView, DeleteView, UpdateView,
                                   ListView, DetailView)
 
+from download.forms import NewDownloadForm
 from download.models import DownloadTask
 
 
 class NewDownloadView(CreateView):
     model = DownloadTask
     template_name = 'download/new_download.html'
-    fields = ['url', 'owner', 'start_time', 'auto_pause',
-              'auto_pause_time', 'auto_resume_time']
+    form_class = NewDownloadForm
+    success_url = reverse_lazy('download_list')
 
 
 class CancelDownload(View):
@@ -40,6 +41,8 @@ class ResumeDownload(View):
 
 class DownloadList(ListView):
     model = DownloadTask
+    template_name = 'download/download_list.html'
+    context_object_name = 'downloads'
 
 
 class DownloadDetail(DetailView):

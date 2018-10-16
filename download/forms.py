@@ -4,8 +4,8 @@ from django import forms
 from download.models import DownloadTask
 
 
-class NewDownloadTaskForm(forms.ModelForm):
+class NewDownloadForm(forms.ModelForm):
     class Meta:
         model = DownloadTask
-        fields = ['url', 'start_time', 'auto_pause', 'auto_pause_time',
+        fields = ['url', 'owner', 'auto_pause', 'auto_pause_time',
                   'auto_resume_time', 'priority']
